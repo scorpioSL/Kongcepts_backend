@@ -20,6 +20,9 @@ export class Employee {
   emp_address: string;
 
   @Prop()
+  emp_photo: string;
+
+  @Prop()
   emp_password: string;
 
   @Prop({ type: SchemaTypes.ObjectId, ref: 'Branch' })
@@ -32,6 +35,7 @@ export function transform(document: EmployeeDocument): EmployeeResponseDto {
   employee.emp_name = document.emp_name;
   employee.emp_email = document.emp_email;
   employee.emp_address = document.emp_address;
+  employee.emp_photo = document.emp_photo;
   if (document.branch) {
     const branch: Branch = document.get('branch');
     employee.branch_name = branch.branch_name;
