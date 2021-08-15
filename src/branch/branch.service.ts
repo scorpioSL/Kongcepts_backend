@@ -9,13 +9,14 @@ import {
   transform,
 } from 'src/database/schemas/branch.schema';
 import { BranchDto } from 'src/shared/dto/branch.dto';
+import { IBaseService } from 'src/shared/interfaces/base.service.interface';
 import { QueryOrderType } from 'src/shared/types/query-order.types';
 import { ObjectIdGenerator } from 'src/shared/utill/objectId-generator.utill';
 import { BranchForbiddenException } from './exceptions/branch-forbidden.exception';
 import { BranchNotFoundException } from './exceptions/branch-not-found.exception';
 
 @Injectable()
-export class BranchService {
+export class BranchService implements IBaseService<BranchDto, Branch> {
   constructor(
     @InjectModel(Branch.name) private branchModel: Model<BranchDocument>,
     private readonly bankService: BankService,

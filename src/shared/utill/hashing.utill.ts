@@ -10,5 +10,5 @@ export async function compareHash(
   rawPayload: string,
   hash: string,
 ): Promise<boolean> {
-  return await bcrypt.compare(hash, hash);
+  return await bcrypt.compare(rawPayload, hash);
 }

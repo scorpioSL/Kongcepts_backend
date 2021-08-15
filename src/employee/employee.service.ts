@@ -13,9 +13,11 @@ import { EmployeeResponseDto } from 'src/shared/dto/employee-response.dto';
 import { BranchService } from 'src/branch/branch.service';
 import { EmployeeForbiddenException } from './exceptions/employee-forbidden.exception';
 import { EmployeeNotFoundException } from './exceptions/employee-not-found.exception';
+import { IBaseService } from 'src/shared/interfaces/base.service.interface';
+import { hashPayload } from 'src/shared/utill/hashing.utill';
 
 @Injectable()
-export class EmployeeService {
+export class EmployeeService implements IBaseService<EmployeeDto, EmployeeResponseDto> {
   constructor(
     @InjectModel(Employee.name) private employeeModel: Model<EmployeeDocument>,
     private branchService: BranchService,
@@ -52,6 +54,7 @@ export class EmployeeService {
       } else {
         employeeDocument = new this.employeeModel({
           ...employeeDto,
+          emp_password: await hashPayload(employeeDto.emp_password),
           branch: Types.ObjectId(branch.branch_id),
         });
         await employeeDocument.save();
@@ -99,5 +102,20 @@ export class EmployeeService {
     } catch (error) {
       throw error;
     }
+  }
+
+  public async remove(id: string): Promise<EmployeeResponseDto> {
+    const employeeDocument: EmployeeDocument = await this.employeeModel
+      .findOneAndDelete({ _id: id })
+      .exec();
+    return transform(employeeDocument);
+  }
+
+  public async findByEmail(email: string): Promise<EmployeeDocument> {
+    const employeeDocument: EmployeeDocument = await this.employeeModel.findOne({
+      emp_email: email
+    }).exec();
+
+    return employeeDocument;
   }
 }

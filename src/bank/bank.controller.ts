@@ -8,6 +8,7 @@ import {
   Post,
   Query,
   Res,
+  UseGuards,
 } from '@nestjs/common';
 import { BankService } from './bank.service';
 import { Response } from 'express';
@@ -15,9 +16,11 @@ import { BankDto } from 'src/shared/dto/bank.dto';
 import { QueryOrderType } from 'src/shared/types/query-order.types';
 import { catchError } from 'src/shared/error-handling/catch-error';
 import { Bank } from 'src/database/schemas/bank.schema';
+import { IBaseController } from 'src/shared/interfaces/base.controller.interface';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guards';
 
 @Controller('bank')
-export class BankController {
+export class BankController implements IBaseController<BankDto> {
   constructor(private readonly bankService: BankService) {
     // do nothing
   }
@@ -35,6 +38,7 @@ export class BankController {
     }
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get('find/:id')
   public async find(
     @Res() res: Response,
@@ -48,6 +52,7 @@ export class BankController {
     }
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get('query')
   public async query(
     @Res() res: Response,
@@ -67,6 +72,7 @@ export class BankController {
     }
   }
 
+  @UseGuards(JwtAuthGuard)
   @Delete('delete/:id')
   public async remove(
     @Res() res: Response,

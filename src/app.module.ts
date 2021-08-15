@@ -6,6 +6,7 @@ import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { BranchModule } from './branch/branch.module';
 import { BankModule } from './bank/bank.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { BankModule } from './bank/bank.module';
     EmployeeModule,
     BranchModule,
     BankModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

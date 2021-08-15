@@ -8,6 +8,7 @@ import {
   Post,
   Query,
   Res,
+  UseGuards,
 } from '@nestjs/common';
 import { BranchService } from './branch.service';
 import { Response } from 'express';
@@ -15,10 +16,12 @@ import { BranchDto } from 'src/shared/dto/branch.dto';
 import { QueryOrderType } from 'src/shared/types/query-order.types';
 import { Branch } from 'src/database/schemas/branch.schema';
 import { catchError } from 'src/shared/error-handling/catch-error';
+import { IBaseController } from 'src/shared/interfaces/base.controller.interface';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guards';
 
 @Controller('branch')
-export class BranchController {
-  constructor(private readonly branchService: BranchService) {}
+export class BranchController implements IBaseController<BranchDto> {
+  constructor(private readonly branchService: BranchService) { }
 
   @Post('create')
   public async create(@Res() res: Response, @Body() branchDtp: BranchDto) {
@@ -30,6 +33,7 @@ export class BranchController {
     }
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get('find/:id')
   public async find(@Res() res: Response, @Param('id') id: string) {
     try {
@@ -40,6 +44,7 @@ export class BranchController {
     }
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get('query')
   public async query(
     @Res() res: Response,
@@ -59,6 +64,7 @@ export class BranchController {
     }
   }
 
+  @UseGuards(JwtAuthGuard)
   @Delete('delete/:id')
   public async remove(@Res() res: Response, @Param('id') id: string) {
     try {

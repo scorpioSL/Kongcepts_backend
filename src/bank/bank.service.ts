@@ -7,12 +7,13 @@ import {
   transform,
 } from 'src/database/schemas/bank.schema';
 import { BankDto } from 'src/shared/dto/bank.dto';
+import { IBaseService } from 'src/shared/interfaces/base.service.interface';
 import { QueryOrderType } from 'src/shared/types/query-order.types';
 import { BankNotFoundException } from './exceptions/bank-not-found.exception';
 
 @Injectable()
-export class BankService {
-  constructor(@InjectModel(Bank.name) private bankModel: Model<BankDocument>) {}
+export class BankService implements IBaseService<BankDto, Bank> {
+  constructor(@InjectModel(Bank.name) private bankModel: Model<BankDocument>) { }
 
   public async create(bankDto: BankDto): Promise<Bank> {
     try {
