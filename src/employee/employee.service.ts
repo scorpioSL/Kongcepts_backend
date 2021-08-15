@@ -17,7 +17,9 @@ import { IBaseService } from 'src/shared/interfaces/base.service.interface';
 import { hashPayload } from 'src/shared/utill/hashing.utill';
 
 @Injectable()
-export class EmployeeService implements IBaseService<EmployeeDto, EmployeeResponseDto> {
+export class EmployeeService
+  implements IBaseService<EmployeeDto, EmployeeResponseDto>
+{
   constructor(
     @InjectModel(Employee.name) private employeeModel: Model<EmployeeDocument>,
     private branchService: BranchService,
@@ -112,9 +114,11 @@ export class EmployeeService implements IBaseService<EmployeeDto, EmployeeRespon
   }
 
   public async findByEmail(email: string): Promise<EmployeeDocument> {
-    const employeeDocument: EmployeeDocument = await this.employeeModel.findOne({
-      emp_email: email
-    }).exec();
+    const employeeDocument: EmployeeDocument = await this.employeeModel
+      .findOne({
+        emp_email: email,
+      })
+      .exec();
 
     return employeeDocument;
   }

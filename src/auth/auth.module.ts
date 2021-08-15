@@ -28,7 +28,14 @@ import { EmployeeService } from 'src/employee/employee.service';
     ]),
   ],
   controllers: [AuthController],
-  providers: [AuthService, JwtStrategy, JwtAuthGuard, EmployeeService, BranchService, BankService],
+  providers: [
+    AuthService,
+    JwtStrategy,
+    JwtAuthGuard,
+    EmployeeService,
+    BranchService,
+    BankService,
+  ],
   exports: [JwtStrategy, JwtAuthGuard],
 })
-export class AuthModule { }
+export class AuthModule {}

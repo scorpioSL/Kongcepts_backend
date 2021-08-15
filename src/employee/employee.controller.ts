@@ -21,7 +21,7 @@ import { QueryOrderType } from 'src/shared/types/query-order.types';
 import { EmployeeService } from './employee.service';
 
 @Controller('employee')
-export class EmployeeController implements IBaseController<EmployeeDto>{
+export class EmployeeController implements IBaseController<EmployeeDto> {
   constructor(private readonly employeeService: EmployeeService) {
     // do nothing
   }
@@ -69,9 +69,14 @@ export class EmployeeController implements IBaseController<EmployeeDto>{
 
   @UseGuards(JwtAuthGuard)
   @Delete('delete/:id')
-  public async remove(@Res() res: Response, @Param('id') id: string): Promise<Response> {
+  public async remove(
+    @Res() res: Response,
+    @Param('id') id: string,
+  ): Promise<Response> {
     try {
-      const employee: EmployeeResponseDto = await this.employeeService.remove(id);
+      const employee: EmployeeResponseDto = await this.employeeService.remove(
+        id,
+      );
       return res.status(HttpStatus.OK).json(employee);
     } catch (error) {
       catchError(res, error);

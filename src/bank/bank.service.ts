@@ -13,7 +13,7 @@ import { BankNotFoundException } from './exceptions/bank-not-found.exception';
 
 @Injectable()
 export class BankService implements IBaseService<BankDto, Bank> {
-  constructor(@InjectModel(Bank.name) private bankModel: Model<BankDocument>) { }
+  constructor(@InjectModel(Bank.name) private bankModel: Model<BankDocument>) {}
 
   public async create(bankDto: BankDto): Promise<Bank> {
     try {

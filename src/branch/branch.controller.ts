@@ -21,7 +21,7 @@ import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guards';
 
 @Controller('branch')
 export class BranchController implements IBaseController<BranchDto> {
-  constructor(private readonly branchService: BranchService) { }
+  constructor(private readonly branchService: BranchService) {}
 
   @Post('create')
   public async create(@Res() res: Response, @Body() branchDtp: BranchDto) {
